@@ -1,9 +1,11 @@
 <?php
 /**
- * Plugin Name: WP Rebranding
+ * Plugin Name: WP Rebranding 🦋
+ * Plugin URI: https://github.com/costashush/wp-rebranding
  * Description: White-label WordPress login and admin area. Hide or replace logos, remove comments, and add custom branding.
- * Version: 1.2.0
+ * Version: 1.2.1
  * Author: STORZ
+ * Author URI: https://storz.co.il
  */
 
 if (!defined('ABSPATH')) exit;
@@ -157,14 +159,6 @@ function wprb_render_settings_page() {
                 <button type="submit" name="wprb_save_settings" class="button button-primary">Save Settings</button>
             </p>
         </form>
-
-        <h2>Changes Included</h2>
-        <ul>
-            <li>✔ Hide or replace login logo</li>
-            <li>✔ Hide WordPress admin bar logo</li>
-            <li>✔ Add custom admin bar logo</li>
-            <li>✔ Remove WordPress Comments globally</li>
-        </ul>
     </div>
     <?php
 }
