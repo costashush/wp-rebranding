@@ -27,7 +27,8 @@ add_action('login_enqueue_scripts', function () {
             /* Custom login logo */
             body.login h1 a {
                 background-image: url('<?php echo esc_url($custom_logo_url); ?>') !important;
-                background-size: contain !important;
+                background-size: cover !important;
+                pointer-events: none;
                 background-repeat: no-repeat !important;
                 background-position: center center !important;
                 width: 220px !important;
