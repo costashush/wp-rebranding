@@ -2,14 +2,14 @@
 /**
  * Plugin Name: WP Rebranding
  * Description: White-label your WordPress login page. Hide the WordPress logo or replace it with a custom logo using simple settings.
- * Version: 1.0.0
+ * Version: 1.1.0
  * Author: STORZ
  */
 
 if (!defined('ABSPATH')) exit;
 
 /**
- * Apply login page rebranding CSS
+ * Login page rebranding CSS
  */
 add_action('login_enqueue_scripts', function () {
     $hide_logo       = get_option('wprb_hide_logo', '0');
@@ -23,13 +23,13 @@ add_action('login_enqueue_scripts', function () {
     ?>
     <style>
         <?php if ($hide_logo === '1' && !($use_custom === '1' && $custom_logo_url !== '')): ?>
-            /* Hide WordPress logo completely */
+            /* Hide WordPress logo completely on login */
             body.login h1 a {
                 display: none !important;
                 visibility: hidden !important;
             }
         <?php elseif ($use_custom === '1' && $custom_logo_url !== ''): ?>
-            /* Custom logo */
+            /* Custom logo on login */
             body.login h1 a {
                 background-image: url('<?php echo esc_url($custom_logo_url); ?>') !important;
                 background-size: contain !important;
@@ -48,7 +48,17 @@ add_action('login_enqueue_scripts', function () {
 });
 
 /**
- * Add settings page under "Settings → WP Rebranding"
+ * Hide WP logo in admin bar when "Hide WordPress Logo" is enabled
+ */
+add_action('admin_bar_menu', function ($wp_admin_bar) {
+    $hide_logo = get_option('wprb_hide_logo', '0');
+    if ($hide_logo === '1') {
+        $wp_admin_bar->remove_node('wp-logo'); // removes top-left WP logo
+    }
+}, 999);
+
+/**
+ * Settings page under "Settings → WP Rebranding"
  */
 add_action('admin_menu', function () {
     add_options_page(
@@ -86,7 +96,7 @@ function wprb_render_settings_page() {
     ?>
 
     <div class="wrap">
-        <h1>WP Rebranding – Login Logo Settings</h1>
+        <h1>WP Rebranding – Settings</h1>
 
         <form method="post">
             <?php wp_nonce_field('wprb_settings_nonce'); ?>
@@ -99,19 +109,22 @@ function wprb_render_settings_page() {
                         <label>
                             <input type="checkbox" name="wprb_hide_logo" value="1"
                                 <?php checked($hide_logo, '1'); ?>>
-                            Remove default WordPress login logo
+                            Remove default WordPress logo from <strong>login page</strong> and <strong>admin bar</strong>.
                         </label>
                     </td>
                 </tr>
 
                 <tr>
-                    <th scope="row">Use Custom Logo</th>
+                    <th scope="row">Use Custom Login Logo</th>
                     <td>
                         <label>
                             <input type="checkbox" name="wprb_use_custom_logo" value="1"
                                 <?php checked($use_custom, '1'); ?>>
-                            Replace the logo with a custom image
+                            Replace the login logo with a custom image.
                         </label>
+                        <p class="description">
+                            This affects the <strong>login page only</strong>. Admin bar uses text/title, not an image.
+                        </p>
                     </td>
                 </tr>
 
@@ -121,7 +134,7 @@ function wprb_render_settings_page() {
                         <input type="url" name="wprb_custom_logo_url" class="regular-text"
                                placeholder="https://yourdomain.com/logo.png"
                                value="<?php echo $custom_logo_url; ?>">
-                        <p class="description">Direct URL to your logo (PNG/SVG recommended).</p>
+                        <p class="description">Direct URL to your logo (PNG/SVG recommended, ~220×90px).</p>
                     </td>
                 </tr>
 
@@ -132,11 +145,21 @@ function wprb_render_settings_page() {
             </p>
         </form>
 
-        <h2>Priority Logic</h2>
+        <h2>Logic</h2>
         <ul>
-            <li><strong>Custom Logo enabled</strong> → show custom logo.</li>
-            <li><strong>Else if Hide Logo enabled</strong> → hide logo completely.</li>
-            <li><strong>Else</strong> → show WordPress default logo.</li>
+            <li><strong>Login page</strong>:
+                <ul>
+                    <li>If "Use Custom Login Logo" is ON and URL is set → show custom logo.</li>
+                    <li>Else if "Hide WordPress Logo" is ON → hide logo completely.</li>
+                    <li>Else → show default WP logo.</li>
+                </ul>
+            </li>
+            <li><strong>Admin bar</strong>:
+                <ul>
+                    <li>If "Hide WordPress Logo" is ON → remove WP logo from admin bar.</li>
+                    <li>Else → show default WP logo.</li>
+                </ul>
+            </li>
         </ul>
     </div>
 
