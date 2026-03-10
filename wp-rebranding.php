@@ -31,7 +31,7 @@ add_action('login_enqueue_scripts', function () {
                 pointer-events: none;
                 background-repeat: no-repeat !important;
                 background-position: center center !important;
-                width: 220px !important;
+                width: 420px !important;
                 height: 90px !important;
                 display: block;
                 text-indent: -9999px;
