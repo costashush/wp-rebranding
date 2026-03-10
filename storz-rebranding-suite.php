@@ -3,7 +3,7 @@
  * Plugin Name: STORZ Rebranding Suite
  * Plugin URI: https://storz.co.il
  * Description: Complete white-label WordPress rebranding suite with login/admin branding, cleanup controls, custom login slug, dashboard widgets, footer editing, and simple avatar options via upload URL or RoboHash image URL.
- * Version: 5.3.0
+ * Version: 2.3.0
  * Author: STORZ
  * Author URI: https://storz.co.il
  * License: GPL2+
