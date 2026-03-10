@@ -131,7 +131,7 @@ add_action('login_enqueue_scripts', function () {
         $css .= "body.login{background-image:url('" . esc_url($settings['login_bg_url']) . "');background-size:cover;background-position:center;background-repeat:no-repeat;}";
     }
     if (!empty($settings['custom_login_logo'])) {
-        $css .= "body.login h1 a{background-image:url('" . esc_url($settings['custom_login_logo']) . "') !important;background-size:contain !important;background-position:center center !important;background-repeat:no-repeat !important;width:240px !important;height:90px !important;}";
+        $css .= "body.login h1 a{background-image:url('" . esc_url($settings['custom_login_logo']) . "') !important;background-size:contain !important;background-position:center center !important;background-repeat:no-repeat !important;width:440px !important;height:200px !important;}";
     } elseif (storz_rs_truthy($settings['hide_wp_logo'])) {
         $css .= "body.login h1 a{display:none !important;visibility:hidden !important;}";
     }
