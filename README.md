@@ -1,1 +1,1 @@
-# wp-rebranding
+# STORZ Rebranding Suite
